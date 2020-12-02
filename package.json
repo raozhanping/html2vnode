@@ -46,6 +46,7 @@
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.9.0",
+    "html2vnode": "^1.0.1",
     "husky": "^4.3.0",
     "size-limit": "^4.9.0",
     "tsdx": "^0.14.1",
