@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "1.0.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -31,7 +31,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "html2vnode",
+  "name": "@ricann/html2vnode",
   "author": "raozhanping",
   "module": "dist/html2vnode.esm.js",
   "size-limit": [
@@ -46,7 +46,6 @@
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.9.0",
-    "html2vnode": "^1.0.1",
     "husky": "^4.3.0",
     "size-limit": "^4.9.0",
     "tsdx": "^0.14.1",
