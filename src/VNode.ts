@@ -9,7 +9,8 @@ export const COMMENT = Symbol('Comment')
 export type VNodeTypes = string | typeof TEXT | typeof COMMENT
 export enum Shapeflags {
   ELEMENT = 1,
-  TEXT = 3
+  TEXT = 3,
+  COMMENT = 8
 }
 export type Data = Record<string, unknown>
 
@@ -48,6 +49,9 @@ export const toVNode = (ele: unknown): VNode => {
 
   if(nodeType === Shapeflags.TEXT) {
     return createTextVNode(_ele.textContent as string)
+  }
+  if (nodeType === Shapeflags.COMMENT) {
+    return createCommentVNode(_ele.textContent as string)
   }
 
   let tagname = _ele.nodeName.toLowerCase();

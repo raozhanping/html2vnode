@@ -29,12 +29,12 @@ export const nodeOps: RendererOptions = {
   createElement(vnode, render) {
     const _render = render as Renderer
     const tagname = (vnode.type as string).toLowerCase()
+    // Filter blocked tags
+    if (isBlockedTag(tagname)) return _render(createCommentVNode(tagname))
     const hasChildren = !isEmpty(vnode.children)
     const props = this.patchProps(vnode)
     const children = hasChildren ? (vnode.children as VNode[]).map(_render as any) : []
     const html = `<${tagname} ${props}>${children.join('')}</${tagname}>`
-    // Filter blocked tags
-    if (isBlockedTag(tagname)) return _render(createCommentVNode(html))
     return html
   },
   patchProps(vnode) {
