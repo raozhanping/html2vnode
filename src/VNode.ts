@@ -1,4 +1,3 @@
-/// <reference path="./index.d.ts"/>
 /**
  * @author raozhanping <raozhanping@gmail.com>
  */
@@ -51,7 +50,7 @@ export const toVNode = (ele: unknown): VNode => {
     return createTextVNode(_ele.textContent as string)
   }
 
-  let tagName = _ele.nodeName;
+  let tagname = _ele.nodeName.toLowerCase();
 
   const resolveProps = compose((attrs: Attr[]) => attrs.reduce((pre, cur) => {
       pre[cur.localName] = cur.nodeValue
@@ -65,6 +64,6 @@ export const toVNode = (ele: unknown): VNode => {
   };
   let children = resolveChildren(_ele)
 
-  return createVNode(tagName, props, children);
+  return createVNode(tagname, props, children);
 };
 

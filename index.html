@@ -8,5 +8,11 @@
 <body>
   <h1 id="html2vnode" class="html2vnode">Html2Vnode</h1>
 </body>
-<script type="module" src="./dist/html2vnode.esm.js"></script>
+<script type="module">
+import { toVNode, shot } from './dist/html2vnode.esm.js'
+
+console.log('toVNode', toVNode(document.documentElement))
+
+console.log('shot:\n', shot('#html2vnode'))
+</script>
 </html>
