@@ -1,0 +1,20 @@
+git:
+  depth: 10
+language: node_js
+cache: yarn
+node_js:
+  - "12"
+branches:
+  only:
+    - master
+script:
+  - yarn test
+deploy:
+  provider: npm
+  email: $EMAIL
+  api_key:
+    secure: $TOKEN
+  skip_cleanup: true
+  tag: $DIST_TAG
+  on:
+    branch: master

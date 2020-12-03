@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -15,7 +15,7 @@
     "build": "tsdx build",
     "test": "tsdx test",
     "lint": "tsdx lint",
-    "prepare": "tsdx build",
+    "prepublishOnly": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
@@ -32,8 +32,17 @@
     "trailingComma": "es5"
   },
   "name": "@ricann/html2vnode",
-  "author": "raozhanping",
   "module": "dist/html2vnode.esm.js",
+  "author": "raozhanping",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raozhanping/html2vnode.git"
+  },
+  "homepage": "https://github.com/raozhanping/html2vnode#html2vnode",
+  "bugs": {
+    "url": "https://github.com/raozhanping/html2vnode/issues"
+  },
+  "keywords": ["html2vnode", "vnode", "domSnapshot"],
   "size-limit": [
     {
       "path": "dist/html2vnode.cjs.production.min.js",
@@ -47,7 +56,6 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.9.0",
     "husky": "^4.3.0",
-    "np": "^7.0.0",
     "size-limit": "^4.9.0",
     "tsdx": "^0.14.1",
     "tslib": "^2.0.3",
