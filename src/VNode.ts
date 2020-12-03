@@ -1,7 +1,8 @@
+/// <reference path="./index.d.ts"/>
 /**
  * @author raozhanping <raozhanping@gmail.com>
  */
-import { isString } from './common'
+import { isString, compose } from './common'
 
 export const TEXT = Symbol('Text')
 export const COMMENT = Symbol('Comment')
@@ -38,3 +39,32 @@ export const createVNode = (type: VNodeTypes, props: Data | null, children: unkn
 
 export const createTextVNode = (text: string = ' ') => createVNode(TEXT, null, text)
 export const createCommentVNode = (text: string = ' ') => createVNode(COMMENT, null, text)
+
+/**
+ * Convert html element to vnode
+ */
+export const toVNode = (ele: unknown): VNode => {
+  const _ele = <Element>ele
+  const nodeType = _ele.nodeType
+
+  if(nodeType === Shapflags.TEXT) {
+    return createTextVNode(_ele.textContent as string)
+  }
+
+  let tagName = _ele.nodeName;
+
+  const resolveProps = compose((attrs: Attr[]) => attrs.reduce((pre, cur) => {
+      pre[cur.localName] = cur.nodeValue
+      return pre
+    }, {} as Data)
+  , Array.from)
+  const props = resolveProps(_ele.attributes)
+
+  const resolveChildren = (ele: Element) => {
+    return ele.hasChildNodes() ? Array.from(ele.childNodes).map(toVNode) : null;
+  };
+  let children = resolveChildren(_ele)
+
+  return createVNode(tagName, props, children);
+};
+
