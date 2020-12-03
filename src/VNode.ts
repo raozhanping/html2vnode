@@ -7,7 +7,7 @@ export const TEXT = Symbol('Text')
 export const COMMENT = Symbol('Comment')
 
 export type VNodeTypes = string | typeof TEXT | typeof COMMENT
-export enum Shapflags {
+export enum Shapeflags {
   ELEMENT = 1,
   TEXT = 3
 }
@@ -26,7 +26,7 @@ export const createVNode = (type: VNodeTypes, props: Data | null, children: unkn
   if (!type) {
     type = COMMENT
   }
-  const shapeFlag = isString(type) ? Shapflags.ELEMENT : 0
+  const shapeFlag = isString(type) ? Shapeflags.ELEMENT : 0
   const vnode: VNode = {
     type,
     props,
@@ -46,7 +46,7 @@ export const toVNode = (ele: unknown): VNode => {
   const _ele = <Element>ele
   const nodeType = _ele.nodeType
 
-  if(nodeType === Shapflags.TEXT) {
+  if(nodeType === Shapeflags.TEXT) {
     return createTextVNode(_ele.textContent as string)
   }
 
