@@ -19,7 +19,7 @@
     "build": "tsdx build --name html2vnode --format cjs,esm,umd",
     "test": "tsdx test",
     "lint": "tsdx lint",
-    "prepublishOnly": "tsdx build",
+    "prepublishOnly": "npm run build",
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
