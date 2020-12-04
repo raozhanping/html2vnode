@@ -1,20 +1,20 @@
 /**
  * @author raozhanping <raozhanping@gmail.com>
  */
-import { isString, compose } from './common'
+import { isString, compose } from './common';
 
-export const TEXT = Symbol('Text')
-export const COMMENT = Symbol('Comment')
+export const TEXT = Symbol('Text');
+export const COMMENT = Symbol('Comment');
 
-export type VNodeTypes = string | typeof TEXT | typeof COMMENT
+export type VNodeTypes = string | typeof TEXT | typeof COMMENT;
 export enum Shapeflags {
   ELEMENT = 1,
   TEXT = 3,
-  COMMENT = 8
+  COMMENT = 8,
 }
-export type Data = Record<string, unknown>
+export type Data = Record<string, unknown>;
 
-export type NormalizedChildren = string | VNode[] | null
+export type NormalizedChildren = string | VNode[] | null;
 
 export interface VNode {
   type: VNodeTypes;
@@ -23,51 +23,59 @@ export interface VNode {
   shapeFlag?: number;
 }
 
-export const createVNode = (type: VNodeTypes, props: Data | null, children: unknown ): VNode => {
+export const createVNode = (
+  type: VNodeTypes,
+  props: Data | null,
+  children: unknown
+): VNode => {
   if (!type) {
-    type = COMMENT
+    type = COMMENT;
   }
-  const shapeFlag = isString(type) ? Shapeflags.ELEMENT : 0
+  const shapeFlag = isString(type) ? Shapeflags.ELEMENT : 0;
   const vnode: VNode = {
     type,
     props,
     shapeFlag,
-    children: children as NormalizedChildren
-  }
-  return vnode
-}
+    children: children as NormalizedChildren,
+  };
+  return vnode;
+};
 
-export const createTextVNode = (text: string = ' ') => createVNode(TEXT, null, text)
-export const createCommentVNode = (text: string = ' ') => createVNode(COMMENT, null, text)
+export const createTextVNode = (text: string = ' ') =>
+  createVNode(TEXT, null, text);
+export const createCommentVNode = (text: string = ' ') =>
+  createVNode(COMMENT, null, text);
 
 /**
  * Convert html element to vnode
  */
 export const toVNode = (ele: unknown): VNode => {
-  const _ele = <Element>ele
-  const nodeType = _ele.nodeType
+  const _ele = ele as Element;
+  const nodeType = _ele.nodeType;
 
-  if(nodeType === Shapeflags.TEXT) {
-    return createTextVNode(_ele.textContent as string)
+  if (nodeType === Shapeflags.TEXT) {
+    return createTextVNode(_ele.textContent as string);
   }
   if (nodeType === Shapeflags.COMMENT) {
-    return createCommentVNode(_ele.textContent as string)
+    return createCommentVNode(_ele.textContent as string);
   }
 
   let tagname = _ele.nodeName.toLowerCase();
 
-  const resolveProps = compose((attrs: Attr[]) => attrs.reduce((pre, cur) => {
-      pre[cur.localName] = cur.nodeValue
-      return pre
-    }, {} as Data)
-  , Array.from)
-  const props = resolveProps(_ele.attributes)
+  const resolveProps = compose(
+    (attrs: Attr[]) =>
+      attrs.reduce((pre, cur) => {
+        pre[cur.localName] = cur.nodeValue;
+        return pre;
+      }, {} as Data),
+    Array.from
+  );
+  const props = resolveProps(_ele.attributes);
 
   const resolveChildren = (ele: Element) => {
     return ele.hasChildNodes() ? Array.from(ele.childNodes).map(toVNode) : null;
   };
-  let children = resolveChildren(_ele)
+  let children = resolveChildren(_ele);
 
   return createVNode(tagname, props, children);
 };
-
