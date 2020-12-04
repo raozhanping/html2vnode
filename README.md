@@ -25,7 +25,7 @@ toVNode(ele)
 🚀 A simple scene, we can use it to take dom snapshot. like these:
 
 ```js
-import('https://cdn.jsdelivr.net/npm/@ricann/html2vnode@0.1.1/dist/html2vnode.umd.production.min.js')
+import('https://cdn.jsdelivr.net/npm/@ricann/html2vnode@0.1.2/dist/html2vnode.umd.production.min.js')
 // Which node you want to take snapshot.
 // @param {string} selector
 window.html2vnode.shot('html')
