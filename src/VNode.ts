@@ -53,29 +53,30 @@ export const toVNode = (ele: unknown): VNode => {
   const _ele = ele as Element;
   const nodeType = _ele.nodeType;
 
-  if (nodeType === Shapeflags.TEXT) {
+  if (nodeType === Shapeflags.ELEMENT) {
+    let tagname = _ele.nodeName.toLowerCase();
+
+    const resolveProps = compose(
+      (attrs: Attr[]) =>
+        attrs.reduce((pre, cur) => {
+          pre[cur.localName] = cur.nodeValue;
+          return pre;
+        }, {} as Data),
+      Array.from
+    );
+    const props = resolveProps(_ele.attributes);
+
+    const resolveChildren = (ele: Element) => {
+      return ele.hasChildNodes()
+        ? Array.from(ele.childNodes).map(toVNode)
+        : null;
+    };
+    let children = resolveChildren(_ele);
+
+    return createVNode(tagname, props, children);
+  } else if (nodeType === Shapeflags.TEXT) {
     return createTextVNode(_ele.textContent as string);
-  }
-  if (nodeType === Shapeflags.COMMENT) {
+  } else {
     return createCommentVNode(_ele.textContent as string);
   }
-
-  let tagname = _ele.nodeName.toLowerCase();
-
-  const resolveProps = compose(
-    (attrs: Attr[]) =>
-      attrs.reduce((pre, cur) => {
-        pre[cur.localName] = cur.nodeValue;
-        return pre;
-      }, {} as Data),
-    Array.from
-  );
-  const props = resolveProps(_ele.attributes);
-
-  const resolveChildren = (ele: Element) => {
-    return ele.hasChildNodes() ? Array.from(ele.childNodes).map(toVNode) : null;
-  };
-  let children = resolveChildren(_ele);
-
-  return createVNode(tagname, props, children);
 };

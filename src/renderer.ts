@@ -23,7 +23,7 @@ export const nodeOps: RendererOptions = {
     return `${vnode.children || ''}`;
   },
   createComment(vnode) {
-    const comment = vnode.children || (vnode.type as string);
+    const comment = vnode.children;
     return `<!-- ${comment} -->`;
   },
   createElement(vnode, render) {
