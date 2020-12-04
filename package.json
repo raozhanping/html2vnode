@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build",
+    "build": "tsdx build --name html2vnode --format cjs,esm,umd",
     "test": "tsdx test",
     "lint": "tsdx lint",
     "prepublishOnly": "tsdx build",
